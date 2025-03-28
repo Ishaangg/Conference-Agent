@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Attendee Analysis Workflow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            overflow: auto;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        .main-step {
+            background-color: #d4f1f9;
+            border: 2px solid #05668d;
+        }
+        .sub-process {
+            background-color: #e1f7d5;
+            border: 1px solid #43a047;
+        }
+        .concurrent {
+            background-color: #ffedd5;
+            border: 1px solid #ff9800;
+        }
+        .data-flow {
+            background-color: #f9f9f9;
+            border: 1px solid #9e9e9e;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conference Attendee Analysis Workflow</h1>
+        <div class="mermaid">
+        flowchart TD
+            classDef mainStep fill:#d4f1f9,stroke:#05668d,stroke-width:2px
+            classDef subProcess fill:#e1f7d5,stroke:#43a047,stroke-width:1px
+            classDef concurrentProcess fill:#ffedd5,stroke:#ff9800,stroke-width:1px
+            classDef dataFlow fill:#f9f9f9,stroke:#9e9e9e,stroke-width:1px
+
+            %% Main Flow
+            Start([Start]) --> LoadData[Load CSV Data]
+            LoadData --> Clean[Clean & Validate File]
+            Clean --> Process[Process Attendees Data]
+            Process --> Analyze[Analyze Organizations]
+            
+            %% Pharmaceutical Analysis Branch
+            Analyze --> PharmaAnalysis[Pharmaceutical Analysis]:::mainStep
+            
+            %% Detail of Pharmaceutical Analysis
+            subgraph PharmaCrewFlow [PharmaCrew Workflow]
+                direction TB
+                Init[Initialize PharmaCrew]:::mainStep
+                Init --> SplitBatches[Split Attendees into Batches]
+                SplitBatches --> ThreadPool[Create Thread Pool]:::mainStep
+                
+                subgraph ConcurrentProcessing [Concurrent Batch Processing]
+                    direction TB
+                    ThreadPool --> |Concurrent Execution| Batch1[Batch 1 Processing]:::concurrentProcess
+                    ThreadPool --> |Concurrent Execution| Batch2[Batch 2 Processing]:::concurrentProcess
+                    ThreadPool --> |Concurrent Execution| Batch3[Batch 3 Processing]:::concurrentProcess
+                    ThreadPool --> |Concurrent Execution| BatchN[Batch N... Processing]:::concurrentProcess
+                    
+                    %% Batch Processing Detail
+                    subgraph BatchDetail [Batch Processing Detail]
+                        direction TB
+                        CreateAgent[Create Pharma Analyst Agent]:::subProcess
+                        CreateTask[Create Analysis Task]:::subProcess
+                        CreateCrew[Create Crew]:::subProcess
+                        RunCrew[Execute Crew]:::subProcess
+                        ProcessResults[Process Results]:::subProcess
+                        
+                        CreateAgent --> CreateTask
+                        CreateTask --> CreateCrew
+                        CreateCrew --> RunCrew
+                        RunCrew --> ProcessResults
+                    end
+                    
+                    Batch1 -.-> BatchDetail
+                    Batch2 -.-> BatchDetail
+                    Batch3 -.-> BatchDetail
+                    BatchN -.-> BatchDetail
+                end
+                
+                Batch1 --> |Thread-Safe Collection| CollectResults[Collect & Combine Results]:::mainStep
+                Batch2 --> |Thread-Safe Collection| CollectResults
+                Batch3 --> |Thread-Safe Collection| CollectResults
+                BatchN --> |Thread-Safe Collection| CollectResults
+                
+                CollectResults --> FinalResults[Final Combined Results]
+                FinalResults --> SaveCSV{Save to CSV?}
+                SaveCSV --> |Yes| ExportCSV[Export to CSV]
+                SaveCSV --> |No| SkipExport[Skip Export]
+            end
+            
+            PharmaAnalysis --> PharmaCrewFlow
+            PharmaCrewFlow --> End([End])
+            
+            %% Definitions
+            ResultsFlow[Thread-safe results collection with Lock]:::dataFlow
+            MaxWorkers[Max concurrent workers = 3]:::dataFlow
+            BatchSize[Configurable batch size]:::dataFlow
+            
+            %% Connect definitions
+            ThreadPool -.-> MaxWorkers
+            SplitBatches -.-> BatchSize
+            CollectResults -.-> ResultsFlow
+        </div>
+
+        <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color main-step"></div>
+                <span>Main Process Steps</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color sub-process"></div>
+                <span>Sub-Process Steps</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color concurrent"></div>
+                <span>Concurrent Processes</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color data-flow"></div>
+                <span>Data Flow Information</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose',
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis'
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

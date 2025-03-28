@@ -1,0 +1,30 @@
+[
+  {
+    "person_name": "John Smith",
+    "industry_association": "Pharmaceutical",
+    "sub_category": "Oncology",
+    "company_name": "AstraZeneca",
+    "company_domain": "astrazeneca.com"
+  },
+  {
+    "person_name": "Jane Doe",
+    "industry_association": "Healthcare",
+    "sub_category": "Not a Lead",
+    "company_name": "Medtronic",
+    "company_domain": "medtronic.com"
+  },
+  {
+    "person_name": "Bob Johnson",
+    "industry_association": "Pharmaceutical",
+    "sub_category": "Oncology",
+    "company_name": "Pfizer",
+    "company_domain": "pfizer.com"
+  },
+  {
+    "person_name": "Alice Brown",
+    "industry_association": "Pharmaceutical",
+    "sub_category": "Not a Lead",
+    "company_name": "Johnson & Johnson",
+    "company_domain": "jnj.com"
+  }
+]

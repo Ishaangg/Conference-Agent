@@ -1,0 +1,68 @@
+analyze_attendees:
+  description: >
+    Analyze the attendee data along with the provided web search results to determine if each person belongs 
+    to the pharmaceutical industry and if they are associated with oncology, women's health, or organ studies.
+    
+    For each attendee, perform the following steps:
+    1. Review the attendee information (name, organization, email)
+    2. Carefully analyze the search_result data which contains web search information about the person
+    3. Based on the search results, determine:
+       a. If they belong to the pharmaceutical industry (classify as "Pharmaceutical", "Healthcare", or "Other")
+       b. Identify their sub-category ("Pharma", "Oncology", "Women's Health", "Organ Studies", or "Not a Lead")
+       c. Confirm or refine their company name and domain from the information
+    
+    IMPORTANT: DO NOT perform additional web searches. All necessary information has already been gathered
+    and is provided in the search_result field for each attendee.
+    
+    Important: Format your output as a valid JSON array with these fields for each attendee:
+    {{
+      "person_name": "First Last",
+      "industry_association": "Pharmaceutical" or "Healthcare" or "Other",
+      "sub_category": "Pharma" or "Oncology" or "Women's Health" or "Organ Studies" or "Not a Lead",
+      "company_name": "Organization Name",
+      "company_domain": "Domain extracted from email or research"
+    }}
+
+    Analyze the following {attendee_count} attendees, each containing web search results:
+
+    {attendees_json}
+
+    For each attendee entry, analyze the attached search results to determine their association 
+    with the pharmaceutical industry and specific medical fields like oncology, women's health, 
+    or organ studies.
+
+    Use these guidelines for your analysis:
+    
+    1. Pharmaceutical Industry Association:
+       - "Pharmaceutical": The person works in pharma, biotech, drug development, clinical trials, etc.
+       - "Healthcare": The person works in healthcare but not specifically pharma (hospitals, clinics, etc.)
+       - "Other": The person is not clearly associated with either pharmaceutical or healthcare industries
+
+    2. Sub-category (if Pharmaceutical):
+       - "Oncology": Cancer research, treatments, therapies
+       - "Women's Health": Gynecology, obstetrics, fertility, maternal health
+       - "Organ Studies": Organ-specific research, transplantation, cardiology, nephrology, etc.
+       - "Pharma": General pharmaceutical but not in the specific sub-categories
+       - "Not a Lead": Not associated with pharmaceutical industry
+
+    Remember to:
+    1. Carefully evaluate the evidence in the search results
+    2. Don't simply rely on keywords but understand the context
+    3. Consider job titles, company focus, and research areas mentioned
+    4. DO NOT perform additional web searches - use only the provided information
+  expected_output: >
+    A JSON array containing classifications for each attendee.
+    Example:
+    [
+      {{
+        "person_name": "John Doe",
+        "industry_association": "Pharmaceutical",
+        "sub_category": "Oncology",
+        "company_name": "Pfizer",
+        "company_domain": "pfizer.com"
+      }},
+      {{
+        ...more attendees...
+      }}
+    ]
+  agent: pharma_analyst 

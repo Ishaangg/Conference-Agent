@@ -1,0 +1,8 @@
+{
+  "sequential_time": 4.784299612045288,
+  "parallel_time": 2.225074052810669,
+  "speedup": 2.150175454161562,
+  "num_queries": 5,
+  "max_concurrent": 3,
+  "efficiency": 71.67251513871874
+}

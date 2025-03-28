@@ -1,0 +1,13 @@
+{
+  "sync_time": 16.56672430038452,
+  "async_time": 7.016596794128418,
+  "speedup": 2.361076856268523,
+  "sync_results_length": [
+    3816,
+    3558
+  ],
+  "async_results_length": [
+    4347,
+    3305
+  ]
+}

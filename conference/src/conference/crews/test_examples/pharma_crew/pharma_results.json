@@ -1,0 +1,23 @@
+[
+  {
+    "person_name": "Stan Zou",
+    "industry_association": "Other",
+    "sub_category": "Not a Lead",
+    "company_name": "Voya Investment Management",
+    "company_domain": "voya.com"
+  },
+  {
+    "person_name": "Renu Vaish",
+    "industry_association": "Pharmaceutical",
+    "sub_category": "Oncology",
+    "company_name": "Johnson&Johnson",
+    "company_domain": "johnsonandjohnson.com"
+  },
+  {
+    "person_name": "Bryan Haffer",
+    "industry_association": "Pharmaceutical",
+    "sub_category": "Women's Health",
+    "company_name": "Natera",
+    "company_domain": "natera.com"
+  }
+]
